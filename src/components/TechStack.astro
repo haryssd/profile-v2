@@ -7,7 +7,7 @@ import { skills } from '../data/skills';
     <span
       class="skill-tag"
       data-category={skill.category}
-      style={`animation-delay:${i * 40}ms`}
+      style={`transition-delay:${i * 30}ms`}
     >
       {skill.name}
     </span>
@@ -21,11 +21,6 @@ import { skills } from '../data/skills';
     gap: 10px;
   }
 
-  @keyframes tag-in {
-    from { opacity: 0; transform: translateY(8px) scale(0.95); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
   .skill-tag {
     font-size: 0.875rem;
     color: var(--muted);
@@ -33,17 +28,13 @@ import { skills } from '../data/skills';
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 2px;
     letter-spacing: 0.04em;
-    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--ease-spring);
     cursor: default;
-    opacity: 0;
-    animation: tag-in 0.45s var(--ease-out) forwards;
-    animation-play-state: paused;
-  }
-
-  /* Tags animate when parent panel enters view */
-  .panel.revealed .skill-tag,
-  .revealed .skill-tag {
-    animation-play-state: running;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s var(--ease-spring);
   }
 
   .skill-tag:hover {
