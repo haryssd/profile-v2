@@ -35,7 +35,7 @@ export const profile = {
   },
 
   contact: {
-    email: 'haryssd36@gmail.com',
+    email: 'harisdanielnoh@gmail.com',
   },
 
   socials: {
@@ -61,7 +61,7 @@ export const profile = {
     youtubeId: '5S6az6odzPI',
     startAt: 13,
     previewDuration: 30,
-    albumArt: '/images/kanye.jpg',
+    albumArt: '/images/kanye.webp',
   },
 
   story: {

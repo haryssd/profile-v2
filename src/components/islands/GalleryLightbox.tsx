@@ -15,8 +15,6 @@ interface Props {
 
 export default function GalleryLightbox({ items }: Props) {
   const [selected, setSelected] = useState<GalleryItem | null>(null);
-  const [loaded, setLoaded] = useState<Record<number, boolean>>({});
-  const [errors, setErrors] = useState<Record<number, boolean>>({});
 
   return (
     <>
@@ -37,8 +35,7 @@ export default function GalleryLightbox({ items }: Props) {
               position: 'relative',
               cursor: 'pointer',
               background: '#0a0a14',
-              transition: 'border-color 0.2s, transform 0.2s',
-              animationDelay: `${i * 80}ms`,
+              transition: 'border-color 0.2s, transform 0.25s ease',
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,213,79,0.3)';
@@ -49,51 +46,35 @@ export default function GalleryLightbox({ items }: Props) {
               (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
             }}
           >
-            {!errors[item.id] ? (
-              <img
-                src={item.image}
-                alt={item.title}
-                loading="lazy"
-                ref={(el) => {
-                  // If image was already cached, onLoad never fires — check .complete on mount
-                  if (el?.complete && !errors[item.id]) {
-                    setLoaded(p => ({ ...p, [item.id]: true }));
-                  }
-                }}
-                onLoad={() => setLoaded(p => ({ ...p, [item.id]: true }))}
-                onError={() => setErrors(p => ({ ...p, [item.id]: true }))}
-                style={{
-                  width: '100%', height: '100%',
-                  objectFit: 'cover',
-                  opacity: loaded[item.id] ? 1 : 0,
-                  transition: 'opacity 0.4s',
-                }}
-              />
-            ) : (
-              <div style={{
-                width: '100%', height: '100%',
-                display: 'flex', flexDirection: 'column',
-                alignItems: 'center', justifyContent: 'center',
-                gap: '6px',
-              }}>
-                <span style={{ fontSize: '28px', opacity: 0.4 }}>{item.emoji}</span>
-              </div>
-            )}
+            <img
+              src={item.image}
+              alt={item.title}
+              loading="lazy"
+              decoding="async"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
 
-            {/* Overlay */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,5,0.85) 0%, transparent 50%)',
-              display: 'flex', alignItems: 'flex-end',
-              padding: '10px',
-              opacity: 0,
-              transition: 'opacity 0.2s',
-            }}
+            {/* Hover overlay */}
+            <div
+              className="gallery-overlay"
+              style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,5,0.85) 0%, transparent 55%)',
+                display: 'flex', alignItems: 'flex-end',
+                padding: '10px',
+                opacity: 0,
+                transition: 'opacity 0.2s',
+              }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
             >
               <div>
-                <div style={{ fontSize: '11px', color: 'rgba(255,213,79,0.8)', letterSpacing: '0.08em', fontWeight: 600 }}>
+                <div style={{ fontSize: '11px', color: 'rgba(255,213,79,0.9)', letterSpacing: '0.08em', fontWeight: 600 }}>
                   {item.title}
                 </div>
                 <div style={{ fontSize: '9px', color: '#90a4ae', letterSpacing: '0.06em' }}>
@@ -128,6 +109,7 @@ export default function GalleryLightbox({ items }: Props) {
                 objectFit: 'contain',
                 borderRadius: '2px',
                 border: '1px solid rgba(255,213,79,0.1)',
+                display: 'block',
               }}
             />
             <div style={{ marginTop: '16px' }}>

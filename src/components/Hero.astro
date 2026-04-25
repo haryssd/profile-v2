@@ -3,26 +3,45 @@ import { profile } from '../data/profile';
 ---
 
 <section id="hero">
-  <div class="hero-eyebrow hero-anim" style="animation-delay:0.1s">{profile.role}
-    <span class="dash"></span>
-  </div>
+  <div class="hero-inner">
+    <!-- Left: Text -->
+    <div class="hero-text">
+      <div class="hero-eyebrow hero-anim" style="animation-delay:0.1s">{profile.role}
+        <span class="dash"></span>
+      </div>
 
-  <h1 class="hero-name hero-anim" style="animation-delay:0.25s">
-    {profile.name.first}<br />
-    <span class="gold-stroke">{profile.name.last}</span><span class="gold-dot">.</span>
-  </h1>
+      <h1 class="hero-name hero-anim" style="animation-delay:0.25s">
+        {profile.name.first}<br />
+        <span class="gold-stroke">{profile.name.last}</span><span class="gold-dot">.</span>
+      </h1>
 
-  <p class="hero-tagline hero-anim" style="animation-delay:0.4s">
-    {profile.tagline}<span class="cursor">_</span>
-  </p>
+      <p class="hero-tagline hero-anim" style="animation-delay:0.4s">
+        {profile.tagline}<span class="cursor">_</span>
+      </p>
 
-  <div class="hero-actions hero-anim" style="animation-delay:0.55s">
-    <a href="#work" class="btn-gold">Explore Work</a>
-    <a href="#contact" class="btn-ghost">Initiate Contact</a>
-  </div>
+      <div class="hero-actions hero-anim" style="animation-delay:0.55s">
+        <a href="#work" class="btn-gold">Explore Work</a>
+        <a href="#contact" class="btn-ghost">Initiate Contact</a>
+      </div>
 
-  <div class="hero-coords hero-anim" style="animation-delay:0.7s">
-    COORD · {profile.location.coordinates.lat} {profile.location.coordinates.lng} · {profile.location.city.toUpperCase()} · {profile.location.flag}
+      <div class="hero-coords hero-anim" style="animation-delay:0.7s">
+        COORD · {profile.location.coordinates.lat} {profile.location.coordinates.lng} · {profile.location.city.toUpperCase()} · {profile.location.flag}
+      </div>
+    </div>
+
+    <!-- Right: Profile photo -->
+    <div class="hero-photo-wrap hero-anim" style="animation-delay:0.5s">
+      <div class="hero-photo-frame">
+        <img
+          src="/images/profile.webp"
+          alt={profile.name.full}
+          class="hero-photo"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="hero-photo-glow"></div>
+      </div>
+    </div>
   </div>
 
   <div class="hero-status hero-anim" style="animation-delay:0.85s">
@@ -43,6 +62,84 @@ import { profile } from '../data/profile';
     justify-content: center;
     padding: 120px 56px 80px;
     position: relative;
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .hero-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Photo */
+  .hero-photo-wrap {
+    flex-shrink: 0;
+    position: relative;
+    opacity: 0;
+  }
+
+  .hero-photo-frame {
+    position: relative;
+    width: 300px;
+    height: 380px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 213, 79, 0.15);
+    box-shadow:
+      0 0 0 1px rgba(255,213,79,0.05),
+      0 32px 80px rgba(0,0,0,0.6),
+      0 0 60px rgba(255,213,79,0.04);
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: brightness(0.92) contrast(1.05);
+    transition: filter 0.4s ease, transform 0.5s var(--ease-spring);
+  }
+  .hero-photo-frame:hover .hero-photo {
+    filter: brightness(1) contrast(1.05);
+    transform: scale(1.03);
+  }
+
+  /* Subtle gold overlay */
+  .hero-photo-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgba(255,213,79,0.06) 0%, transparent 40%),
+      linear-gradient(to bottom, rgba(0,0,5,0.3) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* Floating availability tag */
+  .hero-photo-tag {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(5, 5, 20, 0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.5625rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
   }
 
   /* Entrance animation */
@@ -142,8 +239,13 @@ import { profile } from '../data/profile';
     box-shadow: 0 0 8px #4ade80;
   }
 
+  @media (max-width: 900px) {
+    .hero-photo-wrap { display: none; }
+  }
+
   @media (max-width: 768px) {
     #hero { padding: 100px 24px 80px; }
     .hero-status { right: 24px; bottom: 24px; }
+    .hero-inner { gap: 32px; }
   }
 </style>
