@@ -7,9 +7,12 @@ interface Props {
 }
 
 const {
-  title = 'Haris Daniel — Full-Stack Software Engineer',
-  description = 'Full-Stack Software Engineer based in Kuala Lumpur, Malaysia. Building meaningful digital experiences.',
+  title = 'Haris Daniel Noh — Full-Stack Software Engineer',
+  description = 'Haris Daniel Noh is a Full-Stack Software Engineer based in Kuala Lumpur, Malaysia. Specialising in Vue.js, .NET, Node.js, Docker, and cloud infrastructure.',
 } = Astro.props;
+
+const siteUrl = 'https://harisdanielnoh-dev.pages.dev';
+const ogImage = `${siteUrl}/images/profile.webp`;
 ---
 
 <!doctype html>
@@ -17,10 +20,57 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Haris Daniel Noh" />
+    <meta name="keywords" content="Haris Daniel Noh, harisdanielnoh, Full-Stack Software Engineer, Vue.js, .NET, Node.js, Kuala Lumpur, Malaysia, Software Developer" />
+    <link rel="canonical" href={siteUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_MY" />
+    <meta property="og:site_name" content="Haris Daniel Noh" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD Person Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Haris Daniel Noh",
+      "alternateName": "Haris Daniel",
+      "url": siteUrl,
+      "image": ogImage,
+      "jobTitle": "Full-Stack Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "CIBC Technology Sdn Bhd"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kuala Lumpur",
+        "addressCountry": "MY"
+      },
+      "sameAs": [
+        "https://github.com/haryssd",
+        "https://www.linkedin.com/in/harisdanielnoh/",
+        "https://www.instagram.com/haryssd/"
+      ],
+      "knowsAbout": ["Vue.js", "Node.js", ".NET", "Docker", "Firebase", "Alibaba Cloud", "MySQL", "TypeScript"]
+    })} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
     <!-- Scroll progress bar -->
