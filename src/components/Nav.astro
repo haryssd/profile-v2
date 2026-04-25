@@ -23,9 +23,17 @@ import { profile } from '../data/profile';
     align-items: center;
     padding: 20px 56px;
     border-bottom: 1px solid var(--border);
-    background: rgba(0, 0, 5, 0.75);
+    background: rgba(0, 0, 5, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    transition: padding 0.35s var(--ease-out), background 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  /* Shrinks when scrolled */
+  nav.nav-scrolled {
+    padding: 13px 56px;
+    background: rgba(0, 0, 5, 0.88);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.4);
   }
 
   .nav-logo {
@@ -34,7 +42,9 @@ import { profile } from '../data/profile';
     color: var(--gold);
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    transition: opacity 0.2s;
   }
+  .nav-logo:hover { opacity: 0.75; }
 
   .nav-links {
     display: flex;
@@ -44,26 +54,55 @@ import { profile } from '../data/profile';
     padding: 0;
   }
 
+  .nav-links li {
+    position: relative;
+  }
+
   .nav-links a {
     font-size: 0.6875rem;
     color: var(--muted);
     text-decoration: none;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: color 0.2s;
+    transition: color 0.25s ease;
+    padding-bottom: 4px;
+    display: block;
   }
+
+  /* Animated underline */
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 6px var(--gold);
+    transition: width 0.3s var(--ease-out);
+  }
+
   .nav-links a:hover,
-  .nav-links a.active { color: var(--gold); }
+  .nav-links a.active {
+    color: var(--gold);
+  }
+
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
 
   .nav-coord {
     font-size: 0.6875rem;
     color: var(--muted);
     letter-spacing: 0.08em;
-    opacity: 0.6;
+    opacity: 0.5;
+    transition: opacity 0.2s;
   }
+  .nav-coord:hover { opacity: 0.8; }
 
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
+    nav.nav-scrolled { padding: 12px 24px; }
     .nav-links { gap: 20px; }
     .nav-coord { display: none; }
   }
@@ -76,10 +115,10 @@ import { profile } from '../data/profile';
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      if (window.scrollY >= s.offsetTop - 140) current = s.id;
     });
     links.forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
-  });
+  }, { passive: true });
 </script>

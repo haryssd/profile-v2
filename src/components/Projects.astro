@@ -3,11 +3,11 @@ import { projects } from '../data/projects';
 ---
 
 <section id="projects" class="section-wrapper">
-  <p class="section-label">// projects</p>
-  <h2 class="projects-heading">Things I've <span class="gold-italic">built.</span></h2>
+  <p class="section-label" data-reveal>// projects</p>
+  <h2 class="projects-heading" data-reveal data-delay="80">Things I've <span class="gold-italic">built.</span></h2>
   <div class="projects-grid">
-    {projects.map((project) => (
-      <div class="panel panel-project">
+    {projects.map((project, i) => (
+      <div class="panel panel-project" data-reveal="scale" data-delay={String(i * 120)}>
         <div class="proj-num">{project.num} · {project.category.toUpperCase()}</div>
         <h3 class="proj-title">{project.title}</h3>
         <p class="proj-desc">{project.description}</p>
@@ -57,17 +57,27 @@ import { projects } from '../data/projects';
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition:
+      border-color 0.35s ease,
+      box-shadow 0.35s ease,
+      transform 0.35s var(--ease-spring) !important;
   }
+
+  /* Gold sweep on hover */
   .panel-project::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top left, rgba(255,213,79,0.06), transparent 60%);
+    background: radial-gradient(circle at top left, rgba(255,213,79,0.07), transparent 65%);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s ease;
     pointer-events: none;
   }
   .panel-project:hover::after { opacity: 1; }
+  .panel-project:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,213,79,0.15) !important;
+  }
 
   .proj-num {
     font-size: 0.5625rem;
@@ -75,14 +85,20 @@ import { projects } from '../data/projects';
     letter-spacing: 0.2em;
     margin-bottom: 16px;
     text-transform: uppercase;
+    transition: color 0.2s ease;
   }
+  .panel-project:hover .proj-num { color: rgba(255,213,79,0.65); }
+
   .proj-title {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 10px;
     letter-spacing: -0.01em;
     line-height: 1.2;
+    transition: color 0.2s ease;
   }
+  .panel-project:hover .proj-title { color: var(--gold); }
+
   .proj-desc {
     font-size: 0.8125rem;
     color: var(--muted);
@@ -90,32 +106,30 @@ import { projects } from '../data/projects';
     margin-bottom: 20px;
     flex: 1;
   }
+
   .proj-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     margin-bottom: 20px;
   }
-  .tl-tag {
-    font-size: 0.5625rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    padding: 4px 10px;
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 2px;
-    text-transform: uppercase;
-  }
+
   .proj-footer { margin-top: auto; }
+
   .proj-link {
     font-size: 0.625rem;
     color: var(--gold);
     text-decoration: none;
     letter-spacing: 0.1em;
-    opacity: 0.6;
-    transition: opacity 0.2s;
+    opacity: 0.55;
+    transition: opacity 0.2s ease, letter-spacing 0.3s ease;
     text-transform: uppercase;
   }
-  .proj-link:hover { opacity: 1; }
+  .proj-link:hover {
+    opacity: 1;
+    letter-spacing: 0.15em;
+  }
+
   .proj-private {
     font-size: 0.5625rem;
     color: var(--muted);
@@ -127,5 +141,6 @@ import { projects } from '../data/projects';
   @media (max-width: 900px) {
     .projects-grid { grid-template-columns: 1fr; }
     .section-wrapper { padding: 0 24px; }
+    .panel-project:hover { transform: none !important; }
   }
 </style>

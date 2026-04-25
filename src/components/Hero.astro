@@ -3,30 +3,29 @@ import { profile } from '../data/profile';
 ---
 
 <section id="hero">
-  <div class="hero-eyebrow">
+  <div class="hero-eyebrow hero-anim" style="animation-delay:0.1s">{profile.role}
     <span class="dash"></span>
-    {profile.role}
   </div>
 
-  <h1 class="hero-name">
+  <h1 class="hero-name hero-anim" style="animation-delay:0.25s">
     {profile.name.first}<br />
     <span class="gold-stroke">{profile.name.last}</span><span class="gold-dot">.</span>
   </h1>
 
-  <p class="hero-tagline">
+  <p class="hero-tagline hero-anim" style="animation-delay:0.4s">
     {profile.tagline}<span class="cursor">_</span>
   </p>
 
-  <div class="hero-actions">
+  <div class="hero-actions hero-anim" style="animation-delay:0.55s">
     <a href="#work" class="btn-gold">Explore Work</a>
     <a href="#contact" class="btn-ghost">Initiate Contact</a>
   </div>
 
-  <div class="hero-coords">
-    COORD · {profile.location.coordinates.lat} {profile.location.coordinates.lng} · {profile.location.city.toUpperCase()}, {profile.location.state.toUpperCase()} · {profile.location.flag}
+  <div class="hero-coords hero-anim" style="animation-delay:0.7s">
+    COORD · {profile.location.coordinates.lat} {profile.location.coordinates.lng} · {profile.location.city.toUpperCase()} · {profile.location.flag}
   </div>
 
-  <div class="hero-status">
+  <div class="hero-status hero-anim" style="animation-delay:0.85s">
     <div class="pulsar">
       <div class="pulsar-dot"></div>
       <div class="pulsar-dot"></div>
@@ -46,6 +45,16 @@ import { profile } from '../data/profile';
     position: relative;
   }
 
+  /* Entrance animation */
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-anim {
+    opacity: 0;
+    animation: hero-fade-up 0.7s var(--ease-out) forwards;
+  }
+
   .hero-eyebrow {
     font-size: 0.6875rem;
     font-weight: 500;
@@ -56,9 +65,13 @@ import { profile } from '../data/profile';
     display: flex;
     align-items: center;
     gap: 14px;
-    opacity: 0.8;
+    opacity: 0;
   }
-  .dash { width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
+  .dash {
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0.6;
+  }
 
   .hero-name {
     font-size: clamp(72px, 11vw, 160px);
@@ -72,6 +85,10 @@ import { profile } from '../data/profile';
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 213, 79, 0.6);
     font-style: italic;
+    transition: -webkit-text-stroke-color 0.3s ease;
+  }
+  .gold-stroke:hover {
+    -webkit-text-stroke-color: rgba(255, 213, 79, 1);
   }
   .gold-dot {
     color: var(--gold);
@@ -90,14 +107,21 @@ import { profile } from '../data/profile';
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
   .hero-coords {
     font-size: 0.625rem;
     color: rgba(255, 213, 79, 0.3);
     letter-spacing: 0.1em;
     margin-top: 56px;
+    transition: color 0.3s ease;
   }
+  .hero-coords:hover { color: rgba(255, 213, 79, 0.55); }
 
   .hero-status {
     position: absolute;

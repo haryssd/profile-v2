@@ -3,8 +3,12 @@ import { skills } from '../data/skills';
 ---
 
 <div class="skills-cloud">
-  {skills.map((skill) => (
-    <span class="skill-tag" data-category={skill.category}>
+  {skills.map((skill, i) => (
+    <span
+      class="skill-tag"
+      data-category={skill.category}
+      style={`animation-delay:${i * 40}ms`}
+    >
       {skill.name}
     </span>
   ))}
@@ -17,6 +21,11 @@ import { skills } from '../data/skills';
     gap: 10px;
   }
 
+  @keyframes tag-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
   .skill-tag {
     font-size: 0.875rem;
     color: var(--muted);
@@ -24,14 +33,24 @@ import { skills } from '../data/skills';
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 2px;
     letter-spacing: 0.04em;
-    transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--ease-spring);
     cursor: default;
+    opacity: 0;
+    animation: tag-in 0.45s var(--ease-out) forwards;
+    animation-play-state: paused;
+  }
+
+  /* Tags animate when parent panel enters view */
+  .panel.revealed .skill-tag,
+  .revealed .skill-tag {
+    animation-play-state: running;
   }
 
   .skill-tag:hover {
     color: var(--text);
-    border-color: rgba(255, 213, 79, 0.25);
+    border-color: rgba(255, 213, 79, 0.3);
     background: var(--gold-dim);
-    box-shadow: 0 0 20px rgba(255, 213, 79, 0.08);
+    box-shadow: 0 0 16px rgba(255, 213, 79, 0.1);
+    transform: translateY(-2px) scale(1.03);
   }
 </style>
