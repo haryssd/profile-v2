@@ -5,6 +5,7 @@ export const certifications = [
     platform: 'Coursera',
     completedDate: 'July 15, 2025',
     credentialId: 'CQY1IGZNA6F2',
+    url: 'https://www.coursera.org/account/accomplishments/professional-cert/CQY1IGZNA6F2',
     duration: '6 months',
     totalCourses: 15,
     courses: [
