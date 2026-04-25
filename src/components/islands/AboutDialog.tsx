@@ -9,8 +9,10 @@ interface Education {
 interface Props {
   bio: string;
   story: {
-    codingOrigin: string;
-    motivation: string;
+    whoIAm: readonly string[];
+    whyICode: readonly string[];
+    whyIHike: readonly string[];
+    outsideWork: readonly string[];
     philosophy: string;
     hobbies: readonly string[];
     milestones2025: readonly string[];
@@ -173,11 +175,9 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
 
           <FadeSection delay={0}>
             <Section title="Who I Am" emoji="♡">
-              <p style={bodyStyle}>
-                Name's <strong>Haris Daniel Bin Noh</strong>. Born in {origin.birthplace}, raised on kampung life — open fields, slow mornings, no Wi-Fi. It sounds basic but honestly it shaped how I think, how I stay calm under pressure, and why I don't overcomplicate things.
-              </p>
-              <p style={bodyStyle}>I'm the {origin.siblings} — so I grew up knowing when to lead and when to just listen. That balance still follows me into every team I work with.</p>
-              <p style={bodyStyle}>{bio}</p>
+              {story.whoIAm.map((p, i) => (
+                <p key={i} style={bodyStyle}>{p}</p>
+              ))}
             </Section>
           </FadeSection>
 
@@ -185,7 +185,7 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
 
           <FadeSection delay={60}>
             <Section title="How I Got Here" emoji="✦">
-              <p style={{ ...bodyStyle, marginBottom: '20px' }}>Went through the full Malaysian education route — kampung school, national secondary, MRSM, matriculation, then uni. Each place had its own kind of pressure and its own lessons. Wouldn't trade any of it.</p>
+              <p style={{ ...bodyStyle, marginBottom: '20px' }}>Went through the full Malaysian education route — primary school, national secondary, MRSM, matriculation, then uni. Each place had its own kind of pressure and its own lessons. Wouldn't trade any of it.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {education.map((edu, i) => (
                   <div key={i} style={{
@@ -213,18 +213,36 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           <Divider />
 
           <FadeSection delay={120}>
-            <Section title="What Drives Me" emoji="◎">
-              <p style={bodyStyle}>{story.motivation}</p>
-              <p style={bodyStyle}>{story.codingOrigin}</p>
-              <p style={bodyStyle}>
-                When things get overwhelming I go hiking. No playlist, no agenda — just trail and trees. I try to get up a mountain at least once a month. Every summit reminds me of the same thing: <em style={{ color: '#ffd54f' }}>{story.philosophy}</em>
-              </p>
+            <Section title="Why I Code" emoji="◎">
+              {story.whyICode.map((p, i) => (
+                <p key={i} style={bodyStyle}>{p}</p>
+              ))}
             </Section>
           </FadeSection>
 
           <Divider />
 
-          <FadeSection delay={180}>
+          <FadeSection delay={160}>
+            <Section title="Why I Hike" emoji="⛰">
+              {story.whyIHike.map((p, i) => (
+                <p key={i} style={bodyStyle}>{p}</p>
+              ))}
+            </Section>
+          </FadeSection>
+
+          <Divider />
+
+          <FadeSection delay={200}>
+            <Section title="Outside of Work" emoji="◈">
+              {story.outsideWork.map((p, i) => (
+                <p key={i} style={bodyStyle}>{p}</p>
+              ))}
+            </Section>
+          </FadeSection>
+
+          <Divider />
+
+          <FadeSection delay={240}>
             <Section title="2025 Wins" emoji="★">
               <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {story.milestones2025.map((m, i) => (
