@@ -2,7 +2,7 @@ export const experience = [
   {
     role: 'Software Engineer',
     company: 'CIBC Technology Sdn Bhd',
-    location: 'Puchong, Selangor',
+    location: 'Kuala Lumpur',
     type: 'Full-time',
     start: 'Feb 2024',
     end: 'Present',
@@ -28,7 +28,7 @@ export const experience = [
   {
     role: 'Software Engineer Intern',
     company: 'CIBC Technology Sdn Bhd',
-    location: 'Puchong, Selangor',
+    location: 'Kuala Lumpur',
     type: 'Internship',
     start: 'Aug 2023',
     end: 'Feb 2024',

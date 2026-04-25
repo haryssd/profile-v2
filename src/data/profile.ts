@@ -12,20 +12,20 @@ export const profile = {
 
   bio: {
     short:
-      'Software engineer based in Selangor, Malaysia. Passionate about crafting meaningful digital experiences — from scalable backends to polished user interfaces.',
-    long: "I'm a Full-Stack Software Engineer at CIBC Technology in Puchong, Selangor. I craft meaningful digital experiences — from scalable backends to polished user interfaces. When I'm not at the keyboard, I'm on a summit chasing golden hour. I believe the discipline of a good climb and good code are the same — preparation, endurance, and knowing when to push further.",
+      'Software engineer based in Kuala Lumpur, Malaysia. Passionate about crafting meaningful digital experiences — from scalable backends to polished user interfaces.',
+    long: "I'm a Full-Stack Software Engineer at CIBC Technology in Kuala Lumpur. I craft meaningful digital experiences — from scalable backends to polished user interfaces. When I'm not at the keyboard, I'm on a summit chasing golden hour. I believe the discipline of a good climb and good code are the same — preparation, endurance, and knowing when to push further.",
   },
 
   location: {
-    city: 'Puchong',
-    state: 'Selangor',
+    city: 'Kuala Lumpur',
+    state: 'Kuala Lumpur',
     country: 'Malaysia',
     countryCode: 'MY',
     flag: '🇲🇾',
     coordinates: {
-      lat: '03°06′12″N',
-      lng: '101°31′48″E',
-      display: '03°06′N · 101°31′E',
+      lat: '03°08′51″N',
+      lng: '101°41′42″E',
+      display: '03°08′N · 101°41′E',
     },
   },
 
