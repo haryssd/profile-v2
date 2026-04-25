@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haris Daniel — Portfolio Design Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface-2: #1a1a1a;
+      --accent: #a3e635;
+      --accent-dim: rgba(163, 230, 53, 0.12);
+      --text: #f5f5f5;
+      --muted: #737373;
+      --border: #262626;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* Sections */
+    section {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      padding: 120px 48px 80px;
+      position: relative;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-name {
+      font-size: clamp(64px, 10vw, 140px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .hero-name .highlight {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+    }
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--muted);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cursor-blink {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+    .btn-secondary {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 14px 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+    .hero-bg-text {
+      position: absolute;
+      right: -20px;
+      bottom: 60px;
+      font-size: 280px;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(163, 230, 53, 0.06);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .hero-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 56px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(163, 230, 53, 0); }
+    }
+
+    /* ─── ABOUT ─── */
+    #about { border-top: 1px solid var(--border); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .about-heading {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+    .about-body {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(163, 230, 53, 0.2);
+      padding: 6px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .stat-box:hover { border-color: var(--accent); }
+    .stat-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── WORK ─── */
+    #work { border-top: 1px solid var(--border); }
+    .work-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+    }
+    .section-heading {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 200px 1px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: background 0.2s;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .timeline-item:hover { background: var(--surface); }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding-top: 6px;
+    }
+    .timeline-divider {
+      width: 1px;
+      background: var(--border);
+      margin-top: 8px;
+      position: relative;
+    }
+    .timeline-divider::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .timeline-content {}
+    .timeline-role {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .timeline-company {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .timeline-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { border-top: 1px solid var(--border); }
+    .projects-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, var(--accent-dim), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .project-card:hover::before { opacity: 1; }
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+    }
+    .project-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .project-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .project-link:hover { gap: 10px; }
+
+    /* ─── GALLERY ─── */
+    #gallery { border-top: 1px solid var(--border); padding: 120px 0 80px; }
+    .gallery-inner {
+      width: 100%;
+    }
+    .gallery-header {
+      padding: 0 48px;
+      margin-bottom: 48px;
+    }
+    .gallery-filmstrip {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 0 48px;
+      scrollbar-width: none;
+    }
+    .gallery-filmstrip::-webkit-scrollbar { display: none; }
+    .film-frame {
+      flex: 0 0 320px;
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      transition: transform 0.25s;
+    }
+    .film-frame:hover { transform: scale(1.02); }
+    .film-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .film-icon { font-size: 32px; opacity: 0.3; }
+    .film-caption {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    /* Color variations for gallery placeholders */
+    .film-frame:nth-child(1) .film-placeholder { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .film-frame:nth-child(2) .film-placeholder { background: linear-gradient(135deg, #0d1b2a, #1b2838); }
+    .film-frame:nth-child(3) .film-placeholder { background: linear-gradient(135deg, #1a2a1a, #1e3a1e); }
+    .film-frame:nth-child(4) .film-placeholder { background: linear-gradient(135deg, #2a1a1a, #3a1e1e); }
+    .film-frame:nth-child(5) .film-placeholder { background: linear-gradient(135deg, #2a2a1a, #3a3a1e); }
+    .film-frame:nth-child(6) .film-placeholder { background: linear-gradient(135deg, #1a2a2a, #1e3a3a); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      border-top: 1px solid var(--border);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .contact-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .contact-heading {
+      font-size: clamp(48px, 8vw, 100px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 32px;
+    }
+    .contact-sub {
+      color: var(--muted);
+      font-size: 18px;
+      margin-bottom: 48px;
+      max-width: 480px;
+    }
+    .contact-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+    .contact-link.primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+    .contact-link.primary:hover { opacity: 0.85; color: var(--bg); }
+
+    /* Footer */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .footer-stack {
+      display: flex;
+      gap: 16px;
+    }
+    .stack-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Cursor glow effect */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(163, 230, 53, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: left 0.1s, top 0.1s;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-glow" id="glow"></div>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">haris.dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#work">work</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#gallery">gallery</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">contact →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-text">HD</div>
+    <div class="hero-eyebrow">Full-Stack Software Engineer</div>
+    <h1 class="hero-name">
+      Haris<br><span class="highlight">Daniel.</span>
+    </h1>
+    <p class="hero-tagline">
+      <span>Code. Create. Innovate.</span>
+      <span class="cursor-blink"></span>
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-status">
+      <span class="status-dot"></span>
+      Available for opportunities · Puchong, Selangor 🇲🇾
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <p class="section-label">// about me</p>
+        <h2 class="about-heading">Building things that matter.</h2>
+        <p class="about-body">
+          I'm a Full-Stack Software Engineer based in Selangor, Malaysia, currently at CIBC Technology Sdn Bhd. I'm passionate about crafting meaningful digital experiences — from robust backends to polished UIs.
+        </p>
+        <p class="about-body">
+          When I'm not coding, you'll find me hiking mountains, photographing waterfalls, or chasing golden sunrises from a summit. I believe great software, like great adventures, requires preparation, endurance, and a good eye.
+        </p>
+        <div class="about-tags">
+          <span class="tag">Vue.js</span>
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">IBM Cloud</span>
+          <span class="tag">Azure</span>
+          <span class="tag">MedusaJS</span>
+          <span class="tag">Stripe API</span>
+        </div>
+      </div>
+      <div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Years of Experience</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Projects Shipped</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Tech Skills</div>
+          </div>
+          <div class="stat-box" style="border-color: rgba(163,230,53,0.3); background: var(--accent-dim);">
+            <div class="stat-number" style="font-size: 32px;">IBM</div>
+            <div class="stat-label">DevOps Certified</div>
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--accent); margin-top: 8px;">15 courses · Jul 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="work-inner">
+      <div class="work-header">
+        <div>
+          <p class="section-label">// experience</p>
+          <h2 class="section-heading">Where I've<br>been building.</h2>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Feb 2024 — Present</div>
+          <div class="timeline-divider"></div>
+          <div class="timeline-content">
+            <div class="timeline-role">Software Engineer</div>
+            <div class="timeline-company">CIBC Technology Sdn Bhd · Puchong, Selangor</div>
+            <div class="timeline-desc">
+              Maintaining and enhancing the eBuild system. Built Stripe webhook handlers for subscription lifecycle, integrated SendGrid for email notifications, and developed real-time driver tracking with LeafletJS + Firebase.
+            </div>
+            <div class="timeline-tags">
+              <span class="tag">Vue.js</span>
+              <span class="tag">Firebase</span>
+              <span class="tag">MedusaJS</span>
+              <span class="tag">Stripe</span>
+              <span class="tag">LeafletJS</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 2024 — Present</div>
+          <div class="timeline-divider"></div>
+          <div class="timeline-content">
+            <div class="timeline-role">Software Developer</div>
+            <div class="timeline-company">Sutera Stack · Remote, Freelance</div>
+            <div class="timeline-desc">
+              Queue Management System for Klinik Kesihatan Sungai Air Tawar. Built patient management systems using Quasar Framework and Firebase Realtime Database.
+            </div>
+            <div class="timeline-tags">
+              <span class="tag">Quasar</span>
+              <span class="tag">Firebase</span>
+              <span class="tag">Vue.js</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2023 — Feb 2024</div>
+          <div class="timeline-divider"></div>
+          <div class="timeline-content">
+            <div class="timeline-role">Software Engineer Intern</div>
+            <div class="timeline-company">CIBC Technology Sdn Bhd · Puchong, Selangor</div>
+            <div class="timeline-desc">
+              Maintained eBuild system. Developed eNquiry and Membership Rewards Points modules, and led UI optimization initiatives across the platform.
+            </div>
+            <div class="timeline-tags">
+              <span class="tag">Vue.js</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">IBM Cloud</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="projects-inner">
+      <p class="section-label">// projects</p>
+      <h2 class="section-heading">Things I've built.</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-num">01 / Personal</div>
+          <div class="project-title">Portfolio Website</div>
+          <div class="project-desc">
+            A dark-themed personal portfolio showcasing my work, photography, and journey as a software engineer. Built with Next.js, Tailwind CSS, and Framer Motion.
+          </div>
+          <div class="about-tags" style="margin-bottom: 24px;">
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Tailwind</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">View Project →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-num">02 / E-Commerce</div>
+          <div class="project-title">DBG — Durian Boat Global</div>
+          <div class="project-desc">
+            E-commerce platform with full authentication, Stripe subscription webhooks, and SendGrid email integration powered by MedusaJS.
+          </div>
+          <div class="about-tags" style="margin-bottom: 24px;">
+            <span class="tag">MedusaJS</span>
+            <span class="tag">Stripe</span>
+            <span class="tag">SendGrid</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">View Project →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-num">03 / Logistics</div>
+          <div class="project-title">PHG — Real-time Delivery</div>
+          <div class="project-desc">
+            Logistics platform with a live driver tracking map using LeafletJS and Firebase Realtime Database. Includes a complete payment account module.
+          </div>
+          <div class="about-tags" style="margin-bottom: 24px;">
+            <span class="tag">LeafletJS</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Vue.js</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">View Project →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-inner">
+      <div class="gallery-header">
+        <p class="section-label">// through my lens</p>
+        <h2 class="section-heading">Beyond the screen.</h2>
+      </div>
+      <div class="gallery-filmstrip">
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">🏔️</div>
+            <div class="film-caption">Sikunir Hill<br>Golden Sunrise</div>
+          </div>
+        </div>
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">⛰️</div>
+            <div class="film-caption">Bukit Batu Sawa<br>Panoramic Vista</div>
+          </div>
+        </div>
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">💧</div>
+            <div class="film-caption">Madakaripura<br>Waterfall</div>
+          </div>
+        </div>
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">🌊</div>
+            <div class="film-caption">Tumpak Sewu<br>Thousand Falls</div>
+          </div>
+        </div>
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">🏖️</div>
+            <div class="film-caption">Mbuluk Beach<br>Sandy Cove</div>
+          </div>
+        </div>
+        <div class="film-frame">
+          <div class="film-placeholder">
+            <div class="film-icon">🌅</div>
+            <div class="film-caption">Papuma Beach<br>Rock Formations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="contact-eyebrow">// let's connect</p>
+    <h2 class="contact-heading">Say Hello.</h2>
+    <p class="contact-sub">Open to new opportunities, collaborations, or just a good conversation about tech and mountains.</p>
+    <div class="contact-links">
+      <a href="mailto:haryssd36@gmail.com" class="contact-link primary">haryssd36@gmail.com →</a>
+      <a href="https://github.com/haryssd" class="contact-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/harisdanielnoh/" class="contact-link">LinkedIn</a>
+      <a href="https://www.instagram.com/haryssd/" class="contact-link">Instagram</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2025 Haris Daniel Noh — Built with Astro · Deployed on Cloudflare</span>
+    <div class="footer-stack">
+      <span class="stack-badge">Astro</span>
+      <span class="stack-badge">Cloudflare</span>
+      <span class="stack-badge">Docker</span>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor glow
+    const glow = document.getElementById('glow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    // Scramble text on hero name
+    const hero = document.querySelector('.hero-name');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%';
+    const originalText = ['Haris', 'Daniel.'];
+    let iteration = 0;
+    function scramble() {
+      const spans = hero.querySelectorAll('span, :not(span)');
+    }
+
+    // Active nav highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+---
+import { experience } from '../data/experience';
+---
+
+<section id="work" class="section-wrapper">
+  <div class="panel panel-work">
+    <p class="section-label">// experience</p>
+    <h2 class="work-heading">
+      Where I've been <span class="gold-italic">building.</span>
+    </h2>
+    <div class="timeline">
+      {experience.map((job) => (
+        <div class="tl-item">
+          <div class="tl-date">
+            {job.start} — {job.end}
+            <span class="tl-elapsed">{job.elapsed}</span>
+          </div>
+          <div class="tl-line">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-role">{job.role}</div>
+            <div class="tl-company">{job.company} · {job.location}</div>
+            <p class="tl-desc">{job.description}</p>
+            <div class="tl-tags">
+              {job.tags.map((tag) => (
+                <span class="tl-tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .panel-work { padding: 48px 44px; }
+
+  .work-heading {
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+  }
+
+  .timeline { display: flex; flex-direction: column; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 200px 1px 1fr;
+    gap: 32px;
+    padding: 28px 16px;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-item:hover { background: rgba(255,255,255,0.02); }
+
+  .tl-date {
+    font-size: 0.625rem;
+    color: rgba(255, 213, 79, 0.45);
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+  .tl-elapsed {
+    display: block;
+    color: var(--muted);
+    margin-top: 4px;
+    opacity: 0.5;
+    font-size: 0.5625rem;
+  }
+
+  .tl-line {
+    background: linear-gradient(to bottom, rgba(255,213,79,0.4), rgba(255,213,79,0.05));
+    position: relative;
+    margin-top: 4px;
+  }
+  .tl-dot {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255,213,79,0.4);
+    border: 1px solid var(--space);
+  }
+
+  .tl-role {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .tl-company {
+    font-size: 0.625rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .tl-desc {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 14px;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tl-tag {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .section-wrapper { padding: 0 24px; }
+    .panel-work { padding: 32px 24px; }
+    .tl-item { grid-template-columns: 1px 1fr; gap: 20px; }
+    .tl-date { display: none; }
+  }
+</style>

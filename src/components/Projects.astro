@@ -1,0 +1,131 @@
+---
+import { projects } from '../data/projects';
+---
+
+<section id="projects" class="section-wrapper">
+  <p class="section-label">// projects</p>
+  <h2 class="projects-heading">Things I've <span class="gold-italic">built.</span></h2>
+  <div class="projects-grid">
+    {projects.map((project) => (
+      <div class="panel panel-project">
+        <div class="proj-num">{project.num} · {project.category.toUpperCase()}</div>
+        <h3 class="proj-title">{project.title}</h3>
+        <p class="proj-desc">{project.description}</p>
+        <div class="proj-tags">
+          {project.tags.map((tag) => (
+            <span class="tl-tag">{tag}</span>
+          ))}
+        </div>
+        <div class="proj-footer">
+          {project.url ? (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" class="proj-link">
+              Observe →
+            </a>
+          ) : (
+            <span class="proj-private">Private · Internal</span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .projects-heading {
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .panel-project {
+    padding: 30px 26px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel-project::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,213,79,0.06), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .panel-project:hover::after { opacity: 1; }
+
+  .proj-num {
+    font-size: 0.5625rem;
+    color: rgba(255,213,79,0.35);
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .proj-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .proj-desc {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .tl-tag {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .proj-footer { margin-top: auto; }
+  .proj-link {
+    font-size: 0.625rem;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+  }
+  .proj-link:hover { opacity: 1; }
+  .proj-private {
+    font-size: 0.5625rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .section-wrapper { padding: 0 24px; }
+  }
+</style>

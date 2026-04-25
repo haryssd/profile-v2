@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haris Daniel — Design 3: Glassmorphism Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-start: #050714;
+      --bg-end: #0d0a2e;
+      --accent-blue: #6366f1;
+      --accent-violet: #a855f7;
+      --accent-pink: #ec4899;
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.1);
+      --glass-hover: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: linear-gradient(135deg, var(--bg-start) 0%, #0a0820 50%, var(--bg-end) 100%);
+      min-height: 100vh;
+      color: var(--text);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+    }
+
+    /* ── Animated background orbs ── */
+    .orb-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: float linear infinite;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #6366f1, transparent 70%);
+      top: -200px; left: -100px;
+      animation-duration: 20s;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #a855f7, transparent 70%);
+      top: 30%; right: -150px;
+      animation-duration: 25s;
+      animation-direction: reverse;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #ec4899, transparent 70%);
+      bottom: 10%; left: 20%;
+      animation-duration: 18s;
+    }
+    .orb-4 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #06b6d4, transparent 70%);
+      top: 60%; left: 50%;
+      animation-duration: 22s;
+      animation-direction: reverse;
+    }
+    @keyframes float {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(40px, -30px) scale(1.05); }
+      66%  { transform: translate(-20px, 20px) scale(0.97); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* Star field */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 55% 65%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 92% 8%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 42%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    }
+
+    /* ── Glass mixin ── */
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .glass:hover {
+      background: var(--glass-hover);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.15), 0 20px 60px rgba(0,0,0,0.4);
+      transform: translateY(-3px);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      border-radius: 50px;
+      width: max-content;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      padding-right: 12px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      margin-right: 4px;
+    }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 30px;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+    }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      box-shadow: 0 0 20px rgba(99,102,241,0.4);
+      transition: opacity 0.2s, box-shadow 0.2s;
+      margin-left: 4px;
+    }
+    .nav-cta:hover { opacity: 0.9; box-shadow: 0 0 30px rgba(99,102,241,0.6); }
+
+    /* ── Main content ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 32px 80px;
+    }
+
+    /* ── HERO — Bento Grid ── */
+    .bento-hero {
+      display: grid;
+      grid-template-columns: 340px 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* Profile card */
+    .card-profile {
+      grid-row: 1 / 3;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .avatar-ring {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet), var(--accent-pink));
+      box-shadow: 0 0 30px rgba(99,102,241,0.5), 0 0 60px rgba(168,85,247,0.3);
+      animation: ring-pulse 3s ease-in-out infinite;
+    }
+    @keyframes ring-pulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(99,102,241,0.5), 0 0 60px rgba(168,85,247,0.3); }
+      50% { box-shadow: 0 0 50px rgba(99,102,241,0.7), 0 0 80px rgba(168,85,247,0.5); }
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -2px;
+    }
+    .profile-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .profile-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .profile-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+    .dot-green {
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 4px #4ade80; }
+      50% { box-shadow: 0 0 12px #4ade80; }
+    }
+    .social-links {
+      display: flex; gap: 10px; margin-top: 4px;
+    }
+    .social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+      color: var(--muted);
+    }
+    .social-link:hover {
+      background: rgba(99,102,241,0.2);
+      border-color: var(--accent-blue);
+      color: white;
+      box-shadow: 0 0 15px rgba(99,102,241,0.3);
+    }
+    .profile-location {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* Tagline card */
+    .card-tagline {
+      grid-column: 2 / 4;
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-tagline::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08));
+      border-radius: 20px;
+    }
+    .tagline-text {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline-sub {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .cursor { color: var(--accent-violet); animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Stats row */
+    .bento-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card-stat {
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .stat-num {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── About + Skills ── */
+    .bento-about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card-about { padding: 36px 32px; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-heading {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .card-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .card-skills { padding: 32px 28px; }
+    .skills-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid rgba(99,102,241,0.3);
+      background: rgba(99,102,241,0.08);
+      color: #a5b4fc;
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .skill-tag:hover {
+      background: rgba(99,102,241,0.2);
+      border-color: var(--accent-blue);
+      color: white;
+      box-shadow: 0 0 15px rgba(99,102,241,0.3);
+    }
+    .skill-tag.violet {
+      border-color: rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.08);
+      color: #c4b5fd;
+    }
+    .skill-tag.violet:hover {
+      background: rgba(168,85,247,0.2);
+      border-color: var(--accent-violet);
+      color: white;
+      box-shadow: 0 0 15px rgba(168,85,247,0.3);
+    }
+    .skill-tag.pink {
+      border-color: rgba(236,72,153,0.3);
+      background: rgba(236,72,153,0.08);
+      color: #f9a8d4;
+    }
+    .skill-tag.pink:hover {
+      background: rgba(236,72,153,0.2);
+      border-color: var(--accent-pink);
+      color: white;
+      box-shadow: 0 0 15px rgba(236,72,153,0.3);
+    }
+
+    /* ── Work Timeline ── */
+    .bento-work { margin-bottom: 16px; }
+    .card-work { padding: 36px 40px; }
+    .timeline { margin-top: 32px; display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 180px 1px 1fr;
+      gap: 28px;
+      padding: 24px 16px;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+    .tl-item:hover { background: rgba(255,255,255,0.03); }
+    .tl-date { font-family: var(--font-mono); font-size: 11px; color: var(--muted); padding-top: 4px; }
+    .tl-line {
+      background: linear-gradient(to bottom, var(--accent-blue), var(--accent-violet));
+      border-radius: 1px;
+      position: relative;
+    }
+    .tl-line::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      box-shadow: 0 0 12px rgba(99,102,241,0.8);
+      border: 2px solid #050714;
+    }
+    .tl-role { font-size: 18px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .tl-company {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tl-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+    }
+
+    /* ── Projects ── */
+    .bento-projects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card-project {
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-project::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-violet), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card-project:hover::before { opacity: 1; }
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+    .project-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .project-footer { display: flex; justify-content: space-between; align-items: center; }
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: filter 0.2s;
+    }
+    .project-link:hover { filter: brightness(1.3); }
+
+    /* ── Cert card ── */
+    .bento-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card-cert {
+      padding: 32px 28px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1)) !important;
+      border-color: rgba(99,102,241,0.3) !important;
+    }
+    .cert-issuer {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .cert-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .cert-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.3);
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    /* Gallery card */
+    .card-gallery {
+      grid-column: 2 / 4;
+      padding: 32px;
+      overflow: hidden;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 6px;
+    }
+    .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #1e1b4b, #2d1b69); }
+    .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #0f172a, #1e3a5f); }
+    .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #1a0a2e, #2d1458); }
+    .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #0a2e1a, #145828); }
+    .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(135deg, #2e1a0a, #583814); }
+    .gallery-item:nth-child(6) .gallery-placeholder { background: linear-gradient(135deg, #0a1a2e, #143858); }
+    .gallery-emoji { font-size: 24px; }
+    .gallery-label { font-family: var(--font-mono); font-size: 9px; color: rgba(255,255,255,0.4); text-align: center; }
+
+    /* ── Contact ── */
+    .card-contact {
+      padding: 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08)) !important;
+    }
+    .card-contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,0.1) 0%, transparent 70%);
+    }
+    .contact-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .contact-heading {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .contact-sub { color: var(--muted); font-size: 16px; margin-bottom: 40px; position: relative; }
+    .contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-glow {
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      color: white;
+      box-shadow: 0 0 30px rgba(99,102,241,0.4);
+    }
+    .btn-glow:hover { box-shadow: 0 0 50px rgba(99,102,241,0.7); transform: translateY(-2px); }
+    .btn-outline {
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { color: white; border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 24px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-copy { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+    .footer-stack { display: flex; gap: 8px; }
+    .stack-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb-container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+  <div class="stars"></div>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">haris.dev</span>
+    <ul class="nav-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Gallery</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Contact →</a>
+  </nav>
+
+  <main>
+
+    <!-- HERO BENTO -->
+    <div class="bento-hero">
+
+      <!-- Profile Card -->
+      <div class="glass card-profile">
+        <div class="avatar-ring">
+          <div class="avatar-inner">HD</div>
+        </div>
+        <div>
+          <div class="profile-name">Haris Daniel</div>
+          <div class="profile-role" style="margin-top:4px">Full-Stack Software Engineer</div>
+        </div>
+        <div class="profile-status">
+          <span class="dot-green"></span>
+          Available for hire
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" title="GitHub">GH</a>
+          <a href="#" class="social-link" title="LinkedIn">LI</a>
+          <a href="#" class="social-link" title="Instagram">IG</a>
+        </div>
+        <div class="profile-location">📍 Puchong, Selangor 🇲🇾</div>
+      </div>
+
+      <!-- Tagline Card -->
+      <div class="glass card-tagline">
+        <h1 class="tagline-text">
+          <span class="gradient-text">Code. Create.</span><br>
+          Innovate.
+        </h1>
+        <p class="tagline-sub">Building meaningful digital experiences<span class="cursor">_</span></p>
+      </div>
+
+      <!-- CTA Card -->
+      <div class="glass" style="padding: 32px; display:flex; flex-direction:column; justify-content:center; gap:12px;">
+        <p style="font-size:13px; color:var(--muted); line-height:1.7;">
+          Software engineer based in Malaysia with a passion for solving real problems through clean, scalable code.
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" class="btn-glow" style="padding:10px 20px; font-size:13px;">View Work</a>
+          <a href="#" class="btn-outline" style="padding:10px 20px; font-size:13px;">Resume ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="bento-stats">
+      <div class="glass card-stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="glass card-stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Tech Skills</div>
+      </div>
+      <div class="glass card-stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Projects Shipped</div>
+      </div>
+    </div>
+
+    <!-- ABOUT + SKILLS -->
+    <div class="bento-about">
+      <div class="glass card-about">
+        <p class="section-label">// about me</p>
+        <h2 class="card-heading">Building things<br>that matter.</h2>
+        <p class="card-body">
+          I'm a Full-Stack Software Engineer at CIBC Technology, passionate about crafting meaningful digital experiences. From Stripe webhooks to real-time tracking maps — I love the full spectrum of the stack.<br><br>
+          When not coding, I chase golden sunrises from mountain summits and photograph waterfalls across Southeast Asia.
+        </p>
+      </div>
+      <div class="glass card-skills">
+        <p class="section-label">// tech stack</p>
+        <h2 class="card-heading" style="font-size:22px;">What I work with.</h2>
+        <div class="skills-cloud">
+          <span class="skill-tag">Vue.js</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag violet">TypeScript</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag violet">Docker</span>
+          <span class="skill-tag pink">Firebase</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag violet">Kubernetes</span>
+          <span class="skill-tag">IBM Cloud</span>
+          <span class="skill-tag pink">Azure</span>
+          <span class="skill-tag">MedusaJS</span>
+          <span class="skill-tag violet">Stripe API</span>
+          <span class="skill-tag pink">LeafletJS</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag violet">Python</span>
+          <span class="skill-tag">C#</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORK -->
+    <div class="bento-work">
+      <div class="glass card-work">
+        <p class="section-label">// experience</p>
+        <h2 class="card-heading">Where I've been building.</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">Feb 2024 — Present</div>
+            <div class="tl-line"></div>
+            <div>
+              <div class="tl-role">Software Engineer</div>
+              <div class="tl-company">CIBC Technology Sdn Bhd · Puchong, Selangor</div>
+              <div class="tl-desc">Maintained eBuild system. Built Stripe webhook handlers, integrated SendGrid for emails, and developed real-time driver tracking using LeafletJS + Firebase Realtime Database.</div>
+              <div class="tl-tags">
+                <span class="tl-tag">Vue.js</span><span class="tl-tag">Firebase</span><span class="tl-tag">MedusaJS</span><span class="tl-tag">Stripe</span><span class="tl-tag">LeafletJS</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Jan 2024 — Present</div>
+            <div class="tl-line"></div>
+            <div>
+              <div class="tl-role">Software Developer</div>
+              <div class="tl-company">Sutera Stack · Remote, Freelance</div>
+              <div class="tl-desc">Built a Queue Management System for a government health clinic using Quasar Framework and Firebase.</div>
+              <div class="tl-tags">
+                <span class="tl-tag">Quasar</span><span class="tl-tag">Firebase</span><span class="tl-tag">Vue.js</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Aug 2023 — Feb 2024</div>
+            <div class="tl-line"></div>
+            <div>
+              <div class="tl-role">Software Engineer Intern</div>
+              <div class="tl-company">CIBC Technology Sdn Bhd · Puchong, Selangor</div>
+              <div class="tl-desc">Developed eNquiry and Membership Rewards modules, led UI optimization initiatives across the eBuild platform.</div>
+              <div class="tl-tags">
+                <span class="tl-tag">Vue.js</span><span class="tl-tag">PostgreSQL</span><span class="tl-tag">IBM Cloud</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="bento-projects">
+      <div class="glass card-project">
+        <div class="project-num">01 / Personal</div>
+        <div class="project-title">Portfolio Website</div>
+        <div class="project-desc">Dark-themed personal portfolio with animations, photography gallery, and music player.</div>
+        <div class="tl-tags" style="margin-bottom:16px"><span class="tl-tag">Next.js</span><span class="tl-tag">TypeScript</span><span class="tl-tag">Tailwind</span></div>
+        <div class="project-footer"><a href="#" class="project-link">View →</a></div>
+      </div>
+      <div class="glass card-project">
+        <div class="project-num">02 / E-Commerce</div>
+        <div class="project-title">DBG — Durian Boat Global</div>
+        <div class="project-desc">E-commerce platform with Stripe subscriptions, auth pages, and SendGrid email flows.</div>
+        <div class="tl-tags" style="margin-bottom:16px"><span class="tl-tag">MedusaJS</span><span class="tl-tag">Stripe</span><span class="tl-tag">SendGrid</span></div>
+        <div class="project-footer"><a href="#" class="project-link">View →</a></div>
+      </div>
+      <div class="glass card-project">
+        <div class="project-num">03 / Logistics</div>
+        <div class="project-title">PHG — Live Delivery Tracker</div>
+        <div class="project-desc">Real-time driver tracking with LeafletJS maps and Firebase, plus payment account module.</div>
+        <div class="tl-tags" style="margin-bottom:16px"><span class="tl-tag">LeafletJS</span><span class="tl-tag">Firebase</span><span class="tl-tag">Vue.js</span></div>
+        <div class="project-footer"><a href="#" class="project-link">View →</a></div>
+      </div>
+    </div>
+
+    <!-- CERT + GALLERY -->
+    <div class="bento-bottom">
+      <div class="glass card-cert">
+        <div class="cert-issuer">IBM</div>
+        <div class="cert-title">DevOps & Software Engineering</div>
+        <div class="cert-detail">Professional Certificate · 15 courses completed via Coursera. Covers Docker, Kubernetes, CI/CD, Cloud, Security & more.</div>
+        <div class="cert-badge">✓ Verified · July 2025</div>
+      </div>
+      <div class="glass card-gallery">
+        <p class="section-label">// through my lens</p>
+        <h2 class="card-heading" style="font-size:20px; margin-bottom:0;">Beyond the screen.</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">🏔️</span><span class="gallery-label">Sikunir Hill</span></div></div>
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">💧</span><span class="gallery-label">Madakaripura</span></div></div>
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">🌊</span><span class="gallery-label">Tumpak Sewu</span></div></div>
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">⛰️</span><span class="gallery-label">Batu Sawa</span></div></div>
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">🏖️</span><span class="gallery-label">Mbuluk Beach</span></div></div>
+          <div class="gallery-item"><div class="gallery-placeholder"><span class="gallery-emoji">🌅</span><span class="gallery-label">Papuma Beach</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="glass card-contact" style="margin-bottom:16px;">
+      <p class="contact-eyebrow">// let's connect</p>
+      <h2 class="contact-heading">Say Hello.</h2>
+      <p class="contact-sub">Open to new opportunities, collaborations, or just a great conversation about tech and mountains.</p>
+      <div class="contact-btns">
+        <a href="mailto:haryssd36@gmail.com" class="btn-glow">haryssd36@gmail.com →</a>
+        <a href="#" class="btn-outline">GitHub</a>
+        <a href="#" class="btn-outline">LinkedIn</a>
+        <a href="#" class="btn-outline">Instagram</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span class="footer-copy">© 2025 Haris Daniel Noh</span>
+    <div class="footer-stack">
+      <span class="stack-pill">Astro</span>
+      <span class="stack-pill">Cloudflare</span>
+      <span class="stack-pill">Docker</span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+---
+import { skills } from '../data/skills';
+---
+
+<div class="skills-cloud">
+  {skills.map((skill) => (
+    <span class="skill-tag" data-category={skill.category}>
+      {skill.name}
+    </span>
+  ))}
+</div>
+
+<style>
+  .skills-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-tag {
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding: 10px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+
+  .skill-tag:hover {
+    color: var(--text);
+    border-color: rgba(255, 213, 79, 0.25);
+    background: var(--gold-dim);
+    box-shadow: 0 0 20px rgba(255, 213, 79, 0.08);
+  }
+</style>

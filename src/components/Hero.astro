@@ -1,0 +1,125 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section id="hero">
+  <div class="hero-eyebrow">
+    <span class="dash"></span>
+    {profile.role}
+  </div>
+
+  <h1 class="hero-name">
+    {profile.name.first}<br />
+    <span class="gold-stroke">{profile.name.last}</span><span class="gold-dot">.</span>
+  </h1>
+
+  <p class="hero-tagline">
+    {profile.tagline}<span class="cursor">_</span>
+  </p>
+
+  <div class="hero-actions">
+    <a href="#work" class="btn-gold">Explore Work</a>
+    <a href="#contact" class="btn-ghost">Initiate Contact</a>
+  </div>
+
+  <div class="hero-coords">
+    COORD · {profile.location.coordinates.lat} {profile.location.coordinates.lng} · {profile.location.city.toUpperCase()}, {profile.location.state.toUpperCase()} · {profile.location.flag}
+  </div>
+
+  <div class="hero-status">
+    <div class="pulsar">
+      <div class="pulsar-dot"></div>
+      <div class="pulsar-dot"></div>
+      <div class="pulsar-dot"></div>
+    </div>
+    {profile.availability.status}
+  </div>
+</section>
+
+<style>
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 56px 80px;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0.8;
+  }
+  .dash { width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
+
+  .hero-name {
+    font-size: clamp(72px, 11vw, 160px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  .gold-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 213, 79, 0.6);
+    font-style: italic;
+  }
+  .gold-dot {
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(255,213,79,0.3), 0 0 120px rgba(255,213,79,0.1);
+  }
+
+  .hero-tagline {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 48px;
+  }
+  .cursor {
+    color: var(--gold);
+    animation: blink 1.2s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+  .hero-coords {
+    font-size: 0.625rem;
+    color: rgba(255, 213, 79, 0.3);
+    letter-spacing: 0.1em;
+    margin-top: 56px;
+  }
+
+  .hero-status {
+    position: absolute;
+    bottom: 48px;
+    right: 56px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.625rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .pulsar { display: flex; gap: 3px; align-items: center; }
+  .pulsar-dot {
+    width: 5px; height: 5px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ade80;
+  }
+
+  @media (max-width: 768px) {
+    #hero { padding: 100px 24px 80px; }
+    .hero-status { right: 24px; bottom: 24px; }
+  }
+</style>

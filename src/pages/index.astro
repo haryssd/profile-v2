@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import TechStack from '../components/TechStack.astro';
+import WorkExperience from '../components/WorkExperience.astro';
+import Projects from '../components/Projects.astro';
+import Certifications from '../components/Certifications.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import Starfield from '../components/islands/Starfield';
+import SplashScreen from '../components/islands/SplashScreen';
+import MusicPlayer from '../components/islands/MusicPlayer';
+import GalleryLightbox from '../components/islands/GalleryLightbox';
+import AboutDialog from '../components/islands/AboutDialog';
+
+import { profile } from '../data/profile';
+import { gallery } from '../data/gallery';
+---
+
+<Layout>
+  <!-- Splash screen -->
+  <SplashScreen client:load onComplete={() => {}} />
+
+  <!-- Background layers -->
+  <Starfield client:load />
+  <div class="nebula"></div>
+  <div class="milky-way"></div>
+
+  <!-- Navigation -->
+  <Nav />
+
+  <!-- Main content -->
+  <main>
+    <Hero />
+
+    <div class="constellation" aria-hidden="true">
+      <div class="c-line"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div><div class="c-dot-sm"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div><div class="c-dot-sm"></div>
+      <div class="c-line"></div>
+    </div>
+
+    <!-- About + Tech Stack -->
+    <section id="about" class="section-gap">
+      <div class="two-col-grid" style="max-width:1200px;margin:0 auto;padding:0 48px;gap:20px;">
+        <div class="panel panel-about" style="padding:40px 36px;">
+          <p class="section-label">// about me</p>
+          <h2 style="font-size:clamp(32px,3.5vw,48px);font-weight:300;line-height:1.1;letter-spacing:-0.01em;margin-bottom:20px;">
+            Building things<br />that <span class="gold-italic">matter.</span>
+          </h2>
+          <p style="font-size:0.9375rem;color:var(--muted);line-height:1.85;margin-bottom:24px;">
+            {profile.bio.long}
+          </p>
+          <button id="story-btn" class="btn-ghost" style="cursor:pointer;font-family:inherit;font-size:0.6875rem;">
+            Read My Story →
+          </button>
+          <div class="stats-row">
+            <div class="stat-cell"><div class="stat-num">{profile.stats.yearsExperience}</div><div class="stat-lbl">Years Exp.</div></div>
+            <div class="stat-cell"><div class="stat-num">{profile.stats.techSkills}</div><div class="stat-lbl">Tech Skills</div></div>
+            <div class="stat-cell"><div class="stat-num">{profile.stats.projectsShipped}</div><div class="stat-lbl">Projects</div></div>
+          </div>
+        </div>
+        <div class="panel" style="padding:36px;">
+          <p class="section-label">Tech Stack</p>
+          <TechStack />
+        </div>
+      </div>
+    </section>
+
+    <div class="constellation" aria-hidden="true">
+      <div class="c-line"></div>
+      <div class="c-dot"></div><div class="c-dot-sm"></div><div class="c-dot-sm"></div>
+      <div class="c-dot"></div><div class="c-dot-sm"></div><div class="c-dot"></div>
+      <div class="c-line"></div>
+    </div>
+
+    <div class="section-gap"><WorkExperience /></div>
+
+    <div class="constellation" aria-hidden="true">
+      <div class="c-line"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div><div class="c-dot-sm"></div>
+      <div class="c-dot"></div><div class="c-dot-sm"></div><div class="c-dot-sm"></div>
+      <div class="c-line"></div>
+    </div>
+
+    <div class="section-gap"><Projects /></div>
+
+    <div class="constellation" aria-hidden="true">
+      <div class="c-line"></div>
+      <div class="c-dot"></div><div class="c-dot-sm"></div><div class="c-dot"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div>
+      <div class="c-line"></div>
+    </div>
+
+    <!-- Gallery + Cert + Music -->
+    <section id="gallery" class="section-gap">
+      <div style="max-width:1200px;margin:0 auto;padding:0 48px;">
+        <div class="bottom-grid">
+          <!-- Left: Cert -->
+          <div>
+            <Certifications />
+          </div>
+          <!-- Right: Gallery -->
+          <div class="panel" style="padding:36px;">
+            <p class="section-label">// through my lens</p>
+            <h2 style="font-size:clamp(24px,3vw,36px);font-weight:300;line-height:1.1;margin-bottom:0;">
+              Beyond the <span class="gold-italic">screen.</span>
+            </h2>
+            <div style="margin-top:24px;">
+              <GalleryLightbox client:visible items={gallery as any} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="constellation" aria-hidden="true">
+      <div class="c-line"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div><div class="c-dot-sm"></div>
+      <div class="c-dot-sm"></div><div class="c-dot"></div><div class="c-dot-sm"></div>
+      <div class="c-line"></div>
+    </div>
+
+    <div class="section-gap"><Contact /></div>
+  </main>
+
+  <Footer />
+
+  <!-- Floating music player -->
+  <MusicPlayer
+    client:load
+    title={profile.music.title}
+    artist={profile.music.artist}
+    youtubeId={profile.music.youtubeId}
+    startAt={profile.music.startAt}
+    previewDuration={profile.music.previewDuration}
+    albumArt={profile.music.albumArt}
+  />
+
+  <!-- React islands that listen to DOM events -->
+  <AboutDialog
+    client:load
+    bio={profile.bio.long}
+    story={profile.story as any}
+    education={profile.education as any}
+    origin={profile.origin}
+  />
+</Layout>
+
+<style>
+  .nebula {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+  }
+  .nebula::before {
+    content: '';
+    position: absolute;
+    width: 900px; height: 600px;
+    top: -100px; left: -200px;
+    background: radial-gradient(ellipse, rgba(100,0,50,0.18) 0%, rgba(30,0,80,0.12) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: nebula-drift 40s ease-in-out infinite alternate;
+  }
+  .nebula::after {
+    content: '';
+    position: absolute;
+    width: 700px; height: 500px;
+    bottom: 10%; right: -100px;
+    background: radial-gradient(ellipse, rgba(0,30,120,0.2) 0%, rgba(0,60,100,0.1) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(50px);
+    animation: nebula-drift 50s ease-in-out infinite alternate-reverse;
+  }
+
+  .milky-way {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(180,160,255,0.025) 35%,
+      rgba(200,180,255,0.04) 45%,
+      rgba(180,160,255,0.025) 55%,
+      transparent 70%
+    );
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-gap { margin-bottom: 0; }
+
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 32px;
+  }
+  .stat-cell { background: var(--space); padding: 20px 16px; text-align: center; }
+  .stat-num {
+    font-size: 2.25rem; font-weight: 600;
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stat-lbl { font-size: 0.625rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .two-col-grid { grid-template-columns: 1fr; }
+    .bottom-grid  { grid-template-columns: 1fr; }
+  }
+</style>
