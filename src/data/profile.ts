@@ -78,6 +78,18 @@ export const profile = {
       'Gained muscle — 56kg to 75kg',
       'Climbed Mount Berbabu',
     ],
+    goals2026: [
+      'Land a new job with 30% salary growth',
+      'Get my Scuba Diving License',
+      'Camp at Taman Negara, Pahang',
+      'Donate food and share a meal with orphans on my birthday',
+      'Post more talking content on TikTok',
+      'Converse more in English — daily',
+      'Clear all credit card debt',
+      'Ship 2 projects in Java',
+      'Deepen my connection with Allah SWT',
+      'Build a side income business making RM1,000+ monthly',
+    ],
   },
 
   education: [

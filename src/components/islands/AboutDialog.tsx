@@ -14,6 +14,7 @@ interface Props {
     philosophy: string;
     hobbies: readonly string[];
     milestones2025: readonly string[];
+    goals2026: readonly string[];
   };
   education: readonly Education[];
   origin: { birthplace: string; siblings: string };
@@ -185,7 +186,7 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           <Divider />
 
           <FadeSection delay={180}>
-            <Section title="2025 Milestones" emoji="★">
+            <Section title="2025 Wins" emoji="★">
               <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {story.milestones2025.map((m, i) => (
                   <li key={i} style={{
@@ -194,8 +195,28 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
                     transform: visible ? 'translateX(0)' : 'translateX(-8px)',
                     transition: `opacity 0.3s ease ${240 + i * 50}ms, transform 0.3s ease ${240 + i * 50}ms`,
                   }}>
-                    <span style={{ color: '#ffd54f', opacity: 0.6, flexShrink: 0, marginTop: '1px' }}>→</span>
+                    <span style={{ color: '#ffd54f', opacity: 0.6, flexShrink: 0, marginTop: '1px' }}>✓</span>
                     <span style={{ fontSize: '14px', color: '#90a4ae', lineHeight: 1.6 }}>{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </Section>
+          </FadeSection>
+
+          <Divider />
+
+          <FadeSection delay={240}>
+            <Section title="2026 Goals" emoji="◈">
+              <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {story.goals2026.map((g, i) => (
+                  <li key={i} style={{
+                    display: 'flex', gap: '12px', alignItems: 'flex-start',
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? 'translateX(0)' : 'translateX(-8px)',
+                    transition: `opacity 0.3s ease ${300 + i * 50}ms, transform 0.3s ease ${300 + i * 50}ms`,
+                  }}>
+                    <span style={{ color: '#ffd54f', opacity: 0.5, flexShrink: 0, marginTop: '2px', fontSize: '10px' }}>◆</span>
+                    <span style={{ fontSize: '14px', color: '#90a4ae', lineHeight: 1.6 }}>{g}</span>
                   </li>
                 ))}
               </ul>
