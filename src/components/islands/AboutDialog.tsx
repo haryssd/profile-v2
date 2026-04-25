@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface Education {
   institution: string;
@@ -31,7 +31,10 @@ const badgeColors: Record<string, string> = {
 export default function AboutDialog({ bio, story, education, origin }: Props) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [atBottom, setAtBottom] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const open = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -62,6 +65,16 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
   }, [visible]);
 
   useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const max = scrollHeight - clientHeight;
+    const progress = max > 0 ? scrollTop / max : 0;
+    setScrollProgress(progress);
+    setAtBottom(progress > 0.97);
+  }, []);
 
   if (!mounted) return null;
 
@@ -121,15 +134,41 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: '4px' }} />
         </div>
 
-        {/* Scrollable content — smooth scroll */}
+        {/* Scroll progress bar */}
         <div style={{
-          padding: '20px 32px 28px',
-          overflowY: 'auto',
-          flex: 1,
-          scrollBehavior: 'smooth',
-        }}
-          // custom scrollbar via CSS class
+          height: '2px',
+          background: 'rgba(255,255,255,0.04)',
+          flexShrink: 0,
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            position: 'absolute', inset: '0 auto 0 0',
+            width: `${scrollProgress * 100}%`,
+            background: 'linear-gradient(to right, rgba(255,213,79,0.5), rgba(255,213,79,0.9))',
+            transition: 'width 0.1s linear',
+            borderRadius: '0 2px 2px 0',
+          }} />
+        </div>
+
+        {/* Scrollable content */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
           className="about-scroll"
+          style={{
+            padding: '20px 32px 28px',
+            overflowY: 'auto',
+            flex: 1,
+            overscrollBehavior: 'contain',
+            WebkitOverflowScrolling: 'touch' as any,
+            maskImage: atBottom
+              ? 'none'
+              : 'linear-gradient(to bottom, black 85%, transparent 100%)',
+            WebkitMaskImage: atBottom
+              ? 'none'
+              : 'linear-gradient(to bottom, black 85%, transparent 100%)',
+          }}
         >
 
           <FadeSection delay={0}>
@@ -244,14 +283,18 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           scrollbar-width: thin;
           scrollbar-color: rgba(255,213,79,0.2) transparent;
         }
-        .about-scroll::-webkit-scrollbar { width: 4px; }
+        .about-scroll::-webkit-scrollbar { width: 3px; }
         .about-scroll::-webkit-scrollbar-track { background: transparent; }
         .about-scroll::-webkit-scrollbar-thumb {
           background: rgba(255,213,79,0.2);
           border-radius: 2px;
+          transition: background 0.2s ease;
         }
         .about-scroll::-webkit-scrollbar-thumb:hover {
-          background: rgba(255,213,79,0.4);
+          background: rgba(255,213,79,0.5);
+        }
+        .about-scroll::-webkit-scrollbar-thumb:active {
+          background: rgba(255,213,79,0.7);
         }
       `}</style>
     </div>
@@ -260,16 +303,28 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
 
 function FadeSection({ children, delay }: { children: React.ReactNode; delay: number }) {
   const [show, setShow] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const t = setTimeout(() => setShow(true), delay + 80);
-    return () => clearTimeout(t);
-  }, [delay]);
+    const el = ref.current;
+    if (!el) return;
+
+    // Find the scroll container (parent with overflow-y: auto)
+    const scrollParent = el.closest('.about-scroll') as HTMLElement | null;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShow(true); observer.disconnect(); } },
+      { root: scrollParent, threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div style={{
+    <div ref={ref} style={{
       opacity: show ? 1 : 0,
-      transform: show ? 'translateY(0)' : 'translateY(10px)',
-      transition: 'opacity 0.35s ease, transform 0.35s ease',
+      transform: show ? 'translateY(0)' : 'translateY(12px)',
+      transition: `opacity 0.45s ease ${delay}ms, transform 0.45s cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
     }}>
       {children}
     </div>

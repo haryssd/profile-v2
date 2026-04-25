@@ -14,15 +14,20 @@ export const skills = [
   // Backend
   { name: 'Node.js',     category: 'backend'   },
   { name: 'MedusaJS',    category: 'backend'   },
+  // Backend
+  { name: '.NET 8',      category: 'backend'   },
   // Database
   { name: 'PostgreSQL',  category: 'database'  },
-  { name: 'SQL Workbench',category: 'database' },
+  { name: 'MySQL',       category: 'database'  },
   // Cloud & DevOps
-  { name: 'Docker',      category: 'devops'    },
-  { name: 'Kubernetes',  category: 'devops'    },
-  { name: 'IBM Cloud',   category: 'devops'    },
-  { name: 'Firebase',    category: 'devops'    },
-  { name: 'Microsoft Azure', category: 'devops'},
+  { name: 'Docker',          category: 'devops'    },
+  { name: 'Kubernetes',      category: 'devops'    },
+  { name: 'GitHub Actions',  category: 'devops'    },
+  { name: 'IBM Cloud',       category: 'devops'    },
+  { name: 'Alibaba Cloud',   category: 'devops'    },
+  { name: 'Firebase',        category: 'devops'    },
+  { name: 'Microsoft Azure', category: 'devops'    },
+  { name: 'Cloudflare',      category: 'devops'    },
   // Tools & APIs
   { name: 'Stripe API',  category: 'tool'      },
   { name: 'SendGrid',    category: 'tool'      },

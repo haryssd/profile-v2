@@ -41,6 +41,12 @@ export const experience = [
         description: 'Construction project management system. Developed budget tracking, change request approval workflows, delivery orders, and real-time push & email notifications.',
         tags: ['Node.js', 'Firebase', 'MySQL', 'Autocount'],
       },
+      {
+        name: 'Infrastructure Migration',
+        category: 'DevOps',
+        description: 'Migrated PHG from Azure to Alibaba Cloud — provisioned a live VM, deployed the .NET backend via CapRover and Docker, configured ApsaraDB, and set up Cloudflare DNS/CDN. Migrated all company repos (eBuild, PHG, Hextar Fert) from Bitbucket to GitHub and built CI/CD pipelines for frontend and backend deployments.',
+        tags: ['Docker', 'Alibaba Cloud', 'GitHub Actions', 'Cloudflare', 'MySQL', 'Nginx'],
+      },
     ],
   },
   {
