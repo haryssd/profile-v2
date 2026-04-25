@@ -51,6 +51,11 @@ import { projects } from '../data/projects';
     gap: 16px;
   }
 
+  /* Single card: don't stretch full width */
+  .projects-grid:has(.panel-project:only-child) {
+    grid-template-columns: minmax(0, 380px);
+  }
+
   .panel-project {
     padding: 30px 26px;
     position: relative;

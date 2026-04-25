@@ -27,6 +27,25 @@ import { experience } from '../data/experience';
                 <span class="tl-tag">{tag}</span>
               ))}
             </div>
+
+            {job.systems.length > 0 && (
+              <div class="systems-grid">
+                {job.systems.map((sys) => (
+                  <div class="system-card">
+                    <div class="system-header">
+                      <span class="system-name">{sys.name}</span>
+                      <span class="system-category">{sys.category}</span>
+                    </div>
+                    <p class="system-desc">{sys.description}</p>
+                    <div class="system-tags">
+                      {sys.tags.map((tag) => (
+                        <span class="tl-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       ))}
@@ -57,7 +76,7 @@ import { experience } from '../data/experience';
     display: grid;
     grid-template-columns: 200px 1px 1fr;
     gap: 32px;
-    padding: 28px 16px;
+    padding: 32px 16px;
     border-bottom: 1px solid var(--border);
     align-items: start;
     border-radius: 4px;
@@ -66,7 +85,7 @@ import { experience } from '../data/experience';
   }
   .tl-item:last-child { border-bottom: none; }
   .tl-item:hover {
-    background: rgba(255,255,255,0.025);
+    background: rgba(255,255,255,0.015);
     transform: translateX(4px);
   }
 
@@ -136,7 +155,64 @@ import { experience } from '../data/experience';
     line-height: 1.75;
     margin-bottom: 14px;
   }
+
   .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* Systems grid */
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .system-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 3px;
+    padding: 14px 16px;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s var(--ease-spring);
+  }
+  .system-card:hover {
+    border-color: rgba(255,213,79,0.2);
+    background: rgba(255,213,79,0.03);
+    transform: translateY(-2px);
+  }
+
+  .system-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+  .system-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .system-category {
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,213,79,0.5);
+    border: 1px solid rgba(255,213,79,0.15);
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .system-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .system-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  @media (max-width: 900px) {
+    .systems-grid { grid-template-columns: 1fr; }
+  }
 
   @media (max-width: 768px) {
     .section-wrapper { padding: 0 24px; }

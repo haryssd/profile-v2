@@ -4,29 +4,9 @@ export const projects = [
     category: 'Personal',
     title: 'Portfolio Website',
     description:
-      'Dark-themed personal portfolio with animations, photography gallery, music player, and smooth scroll interactions.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-    url: 'https://github.com/haryssd',
-    status: 'completed' as const,
-  },
-  {
-    num: 'OBJECT-02',
-    category: 'E-Commerce',
-    title: 'DBG — Durian Boat Global',
-    description:
-      'E-commerce platform with full authentication, Stripe subscription webhooks, and SendGrid email integration powered by MedusaJS.',
-    tags: ['MedusaJS', 'Stripe', 'SendGrid', 'Vue.js'],
-    url: null,
-    status: 'completed' as const,
-  },
-  {
-    num: 'OBJECT-03',
-    category: 'Logistics',
-    title: 'PHG — Live Delivery Tracker',
-    description:
-      'Real-time driver tracking with LeafletJS maps and Firebase Realtime Database, plus a complete payment account module.',
-    tags: ['LeafletJS', 'Firebase', 'Vue.js'],
-    url: null,
+      'This site. Built with Astro, React islands, and a lot of late nights. Features a starfield canvas, music player, gallery lightbox, animated dialog, and smooth scroll reveals.',
+    tags: ['Astro', 'React', 'TypeScript', 'Tailwind CSS', 'Cloudflare Pages'],
+    url: 'https://github.com/haryssd/profile-v2',
     status: 'completed' as const,
   },
 ] as const;
