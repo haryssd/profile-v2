@@ -54,6 +54,12 @@ export default function GalleryLightbox({ items }: Props) {
                 src={item.image}
                 alt={item.title}
                 loading="lazy"
+                ref={(el) => {
+                  // If image was already cached, onLoad never fires — check .complete on mount
+                  if (el?.complete && !errors[item.id]) {
+                    setLoaded(p => ({ ...p, [item.id]: true }));
+                  }
+                }}
                 onLoad={() => setLoaded(p => ({ ...p, [item.id]: true }))}
                 onError={() => setErrors(p => ({ ...p, [item.id]: true }))}
                 style={{
