@@ -12,8 +12,8 @@ export const profile = {
 
   bio: {
     short:
-      'Software engineer based in Kuala Lumpur, Malaysia. Passionate about crafting meaningful digital experiences — from scalable backends to polished user interfaces.',
-    long: "I'm a Full-Stack Software Engineer at CIBC Technology in Kuala Lumpur. I craft meaningful digital experiences — from scalable backends to polished user interfaces. When I'm not at the keyboard, I'm on a summit chasing golden hour. I believe the discipline of a good climb and good code are the same — preparation, endurance, and knowing when to push further.",
+      'Full-stack dev based in KL. I build things that actually work — and when I\'m not coding, I\'m probably halfway up a mountain.',
+    long: "I work as a full-stack engineer at CIBC Technology in KL. Day to day that means fixing things, building things, and occasionally breaking things on purpose to understand them better. Outside of work I hike, a lot. There's something about being on a trail with no signal that clears your head in a way nothing else does. I think good code and a good hike have more in common than people realise — both require patience, both will humble you, and both are worth it.",
   },
 
   location: {
@@ -66,10 +66,10 @@ export const profile = {
 
   story: {
     codingOrigin:
-      'Started at age 14 with ethical hacking — BackTrack and Kali Linux. Fell in love with problem-solving and never stopped.',
+      "Got into coding at 14 through ethical hacking — BackTrack, Kali Linux, the whole thing. Honestly I had no idea what I was doing at first, but I was hooked. That curiosity never really left.",
     motivation:
-      "Inspired by the TV show 'Bersamamu' growing up. The goal has always been to help people through technology.",
-    philosophy: 'Progress over final goals.',
+      "Growing up watching 'Bersamamu' hit different. Seeing how much a little help can change someone's life made me want to be that person — just through a different medium. Tech felt like the most scalable way to do that.",
+    philosophy: 'Progress beats perfection. Always.',
     hobbies: ['Mountain hiking', 'Nature photography', 'Music'],
     milestones2025: [
       'Completed IBM DevOps & Software Engineering Certificate (15 courses)',

@@ -135,9 +135,9 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           <FadeSection delay={0}>
             <Section title="Who I Am" emoji="♡">
               <p style={bodyStyle}>
-                My full name is <strong>Haris Daniel Bin Noh</strong>. I was born in {origin.birthplace} and grew up experiencing kampung life — simplicity that still shapes how I approach code and people.
+                Name's <strong>Haris Daniel Bin Noh</strong>. Born in {origin.birthplace}, raised on kampung life — open fields, slow mornings, no Wi-Fi. It sounds basic but honestly it shaped how I think, how I stay calm under pressure, and why I don't overcomplicate things.
               </p>
-              <p style={bodyStyle}>I'm the {origin.siblings} siblings. That perspective — always someone before you, always someone watching — keeps me grounded and collaborative.</p>
+              <p style={bodyStyle}>I'm the {origin.siblings} — so I grew up knowing when to lead and when to just listen. That balance still follows me into every team I work with.</p>
               <p style={bodyStyle}>{bio}</p>
             </Section>
           </FadeSection>
@@ -145,8 +145,8 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           <Divider />
 
           <FadeSection delay={60}>
-            <Section title="Educational Journey" emoji="✦">
-              <p style={{ ...bodyStyle, marginBottom: '20px' }}>From a small kampung school to a national university — each step built a different kind of discipline.</p>
+            <Section title="How I Got Here" emoji="✦">
+              <p style={{ ...bodyStyle, marginBottom: '20px' }}>Went through the full Malaysian education route — kampung school, national secondary, MRSM, matriculation, then uni. Each place had its own kind of pressure and its own lessons. Wouldn't trade any of it.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {education.map((edu, i) => (
                   <div key={i} style={{
@@ -178,7 +178,7 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
               <p style={bodyStyle}>{story.motivation}</p>
               <p style={bodyStyle}>{story.codingOrigin}</p>
               <p style={bodyStyle}>
-                Mountain hiking is my reset button. I try to climb at least once a month — the summit teaches the same thing every time: <em style={{ color: '#ffd54f' }}>{story.philosophy}</em>
+                When things get overwhelming I go hiking. No playlist, no agenda — just trail and trees. I try to get up a mountain at least once a month. Every summit reminds me of the same thing: <em style={{ color: '#ffd54f' }}>{story.philosophy}</em>
               </p>
             </Section>
           </FadeSection>
@@ -234,7 +234,7 @@ export default function AboutDialog({ bio, story, education, origin }: Props) {
           transition: 'opacity 0.3s ease 250ms',
         }}>
           <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.05em' }}>
-            Thanks for taking the time to learn about me ✦
+            If you read this far, respect. Let's connect. ✦
           </p>
         </div>
       </div>
