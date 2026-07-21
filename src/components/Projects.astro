@@ -51,9 +51,15 @@ import { projects } from '../data/projects';
     gap: 16px;
   }
 
-  /* Single card: don't stretch full width */
+  /* 1 card: cap width */
   .projects-grid:has(.panel-project:only-child) {
     grid-template-columns: minmax(0, 380px);
+  }
+
+  /* 2 cards: use 2 columns, centered */
+  .projects-grid:has(.panel-project:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 480px));
+    justify-content: center;
   }
 
   .panel-project {

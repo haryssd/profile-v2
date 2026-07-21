@@ -2,6 +2,16 @@ export const projects = [
   {
     num: 'OBJECT-01',
     category: 'Personal',
+    title: 'Haris Picks — Affiliate Storefront',
+    description:
+      'A custom-branded TikTok link-in-bio storefront for Shopee/Taobao affiliate links. Category browsing, live search, per-product click tracking via edge redirects, R2 image hosting, and a full admin panel behind Cloudflare Access — all on the free tier.',
+    tags: ['Vanilla JS', 'Cloudflare Pages', 'Cloudflare D1', 'Cloudflare R2', 'Cloudflare Access', 'SQLite'],
+    url: 'https://harisdanielnoh-storefront.pages.dev',
+    status: 'completed' as const,
+  },
+  {
+    num: 'OBJECT-02',
+    category: 'Personal',
     title: 'Portfolio Website',
     description:
       'This site. Built with Astro, React islands, and a lot of late nights. Features a starfield canvas, music player, gallery lightbox, animated dialog, and smooth scroll reveals.',

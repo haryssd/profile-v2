@@ -22,7 +22,10 @@
       "Bash(git ls-tree *)",
       "Bash(npx wrangler *)",
       "mcp__17c5ffaa-03a0-4988-a0f9-b6eea4607716__notion-search",
-      "mcp__17c5ffaa-03a0-4988-a0f9-b6eea4607716__notion-fetch"
+      "mcp__17c5ffaa-03a0-4988-a0f9-b6eea4607716__notion-fetch",
+      "WebFetch(domain:harisdanielnoh-dev.pages.dev)",
+      "Read(//e//**)",
+      "Read(//e/DCIM//**)"
     ]
   }
 }
